@@ -1,11 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className=" min-h-screen font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
       {/* Navigation Bar */}
-      <nav className=" shadow-lg">
+      <nav className="shadow-lg">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-xl font-semibold ">Task Manager</h1>
           <div className="space-x-6">
