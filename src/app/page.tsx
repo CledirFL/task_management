@@ -3,21 +3,6 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
-      {/* Navigation Bar */}
-      <nav className="shadow-lg">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-semibold ">Task Manager</h1>
-          <div className="space-x-6">
-            <Link href="/task" legacyBehavior>
-              <a className="text-gray-700 hover:text-gray-300">Task Board</a>
-            </Link>
-            <Link href="/profile" legacyBehavior>
-              <a className="text-gray-700 hover:text-gray-300">User Profile</a>
-            </Link>
-          </div>
-        </div>
-      </nav>
-
       <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 sm:p-20  gap-16  ">
         <main className="flex flex-col gap-8 row-start-2 items-center justify-items-center sm:items-start">
 
