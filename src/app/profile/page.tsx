@@ -1,7 +1,6 @@
 "use client"
 import Image from 'next/image';
 import React, { useState } from 'react';
-import 'tailwindcss/tailwind.css';
 
 const UserProfile: React.FC = () => {
     const [name, setName] = useState('John Doe');
@@ -9,7 +8,6 @@ const UserProfile: React.FC = () => {
     const [editMode, setEditMode] = useState(false);
 
     const handleSave = () => {
-        // Add validation logic here
         if (name && email) {
             setEditMode(false);
         } else {
