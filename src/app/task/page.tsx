@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '@/components/Modal';
 import FeedbackMessage from './feedback-message';
 import { Task } from '../lib/interface';
@@ -14,22 +14,24 @@ const sampleTasks: Task[] = [
     { id: 2, title: 'Task 2', description: 'Description for task 2', status: 'In Progress' },
     { id: 3, title: 'Task 3', description: 'Description for task 3', status: 'Done' },
     { id: 4, title: 'Task 4', description: 'Description for task 4', status: 'To Do' },
-    { id: 5, title: 'Task 5', description: 'Description for task 5', status: 'In Progress' },
-    { id: 6, title: 'Task 6', description: 'Description for task 6', status: 'Done' },
-    { id: 7, title: 'Task 7', description: 'Description for task 7', status: 'To Do' },
-    { id: 8, title: 'Task 8', description: 'Description for task 8', status: 'In Progress' },
-    { id: 9, title: 'Task 9', description: 'Description for task 9', status: 'Done' },
-    { id: 10, title: 'Task 10', description: 'Description for task 10', status: 'To Do' },
+    { id: 5, title: 'Task 5', description: 'Description for task 5', status: 'In Progress' }
 ];
 
 const TaskPage = () => {
-    const [tasks, setTasks] = useState<Task[]>(sampleTasks);
+    const [tasks, setTasks] = useState<Task[]>(() => {
+        const savedTasks = localStorage.getItem('tasks');
+        return savedTasks ? JSON.parse(savedTasks) : [];
+    });
     const [newTask, setNewTask] = useState<Task>({ title: '', description: '', status: 'To Do' });
     const [filter, setFilter] = useState<'All' | 'To Do' | 'In Progress' | 'Done'>('All');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
     const [deletedTask, setDeletedTask] = useState<Task | null>(null);
     const [undoTimeout, setUndoTimeout] = useState<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, [tasks]);
 
     const addTask = () => {
         setTasks([...tasks, { ...newTask, id: Date.now() }]);
