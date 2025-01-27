@@ -1,10 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
-      <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 sm:p-20  gap-16  ">
-        <main className="flex flex-col gap-8 row-start-2 items-center justify-items-center sm:items-start">
+
+      <div className="grid grid-rows-[20px_1fr] items-center justify-items-center p-8 sm:p-20  gap-10  ">
+        <div className="flex flex-col gap-8 row-start-2 items-center justify-items-center sm:items-start">
 
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
             Welcome to Task Manager
@@ -22,22 +23,8 @@ export default function Home() {
               Get Started
             </button>
           </div>
-        </main>
-        <footer className="row-start-3 flex flex-col mt-5 gap-2  items-center justify-center">
-
-          <p>
-            Made by <strong> Kelton Cabral</strong>
-          </p>
-          <Link className="text-gray-600 hover:text-gray-500" href={"https://github.com/CledirFL"} target="_blank" >
-             GitHub
-          </Link>
-          <Link className="text-gray-600 hover:text-gray-500" href={"https://www.linkedin.com/in/kelton-cabral-cv/"} target="_blank" >
-             LinkedIn
-          </Link>
-        </footer>
-
+        </div>
       </div>
 
-    </div>
   );
 }
