@@ -5,6 +5,7 @@ import FeedbackMessage from './feedback-message';
 import { Task } from '../lib/interface';
 import TaskNotFound from './task-not-found';
 import TaskList from './task-list';
+import TaskForm from './task-form';
 
 
 const sampleTasks: Task[] = [
@@ -32,7 +33,6 @@ const TaskPage = () => {
     const addTask = () => {
         setTasks([...tasks, { ...newTask, id: Date.now() }]);
         setNewTask({ title: '', description: '', status: 'To Do' });
-        // set modal false
         setFeedbackMessage('Task created successfully!');
         setTimeout(() => setFeedbackMessage(null), 3000);
     };
@@ -45,11 +45,13 @@ const TaskPage = () => {
         setNewTask({ title: '', description: '', status: 'To Do' });
     };
 
+    // open modal with task data
     const handleEditTask = (task: Task) => {
         setNewTask(task);
         setIsModalOpen(true);
     }
 
+    // delete task with time to undo the action
     const deleteTask = (id: number) => {
         const taskToDelete = tasks.find(task => task.id === id);
         if (taskToDelete) {
@@ -59,10 +61,12 @@ const TaskPage = () => {
             const timeout = setTimeout(() => {
                 setDeletedTask(null);
                 setFeedbackMessage(null);
-            }, 30000);
+            }, 10000);
             setUndoTimeout(timeout);
         }
     };
+
+    // undo delete task
     const undoDelete = () => {
         if (deletedTask) {
             setTasks([...tasks, deletedTask]);
@@ -75,10 +79,12 @@ const TaskPage = () => {
         }
     };
 
+    // close modal and set new task to empty
     const handleCancel = () => {
         setIsModalOpen(false);
         setNewTask({ id: undefined, title: '', description: '', status: 'To Do' });
     }
+    // open modal with empty task
     const handleCreateNew = () => {
         setFeedbackMessage(null);
         setNewTask({ id: undefined, title: '', description: '', status: 'To Do' });
@@ -118,60 +124,7 @@ const TaskPage = () => {
 
             <Modal isOpen={isModalOpen} onClose={handleCancel}>
 
-                <h2 className="text-xl font-bold mb-4">{newTask.id ? "Update the task" : "Add new task"}</h2>
-                <form
-                    className='flex flex-col gap-4'
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        if (newTask.id) {
-                            editTask(newTask.id, newTask);
-                        } else {
-                            addTask();
-                        }
-                    }}
-                >
-                    <input
-                        required
-                        type="text"
-                        placeholder="Title"
-                        value={newTask.title}
-                        onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-                        className="border rounded p-2 bg-gray-800 border-gray-800 text-white"
-                    />
-                    <input
-                        required
-                        type="text"
-                        placeholder="Description"
-                        value={newTask.description}
-                        onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-                        className="border rounded p-2 bg-gray-800 border-gray-800 text-white"
-                    />
-                    <select
-                        required
-                        value={newTask.status}
-                        onChange={(e) => setNewTask({ ...newTask, status: e.target.value as 'To Do' | 'In Progress' | 'Done' })}
-                        className="border rounded p-2 bg-gray-800 border-gray-800 text-white"
-                    >
-                        <option value="To Do">To Do</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Done">Done</option>
-                    </select>
-                    <div className="flex gap-4">
-                        <button
-                            type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        >
-                            {newTask.id ? 'Update Task' : 'Add Task'}
-                        </button>
-                        <button
-                            type="button"
-                            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-                            onClick={handleCancel}
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </form>
+               <TaskForm newTask={newTask} setNewTask={setNewTask} addTask={addTask} editTask={editTask} handleCancel={handleCancel} />
                 {feedbackMessage && !newTask.id && (
                     <FeedbackMessage feedbackMessage={feedbackMessage}  />
                 )}
