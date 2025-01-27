@@ -9,10 +9,7 @@ import TaskForm from './task-form';
 import TaskFilter from './task-filter';
 
 const TaskPage = () => {
-    const [tasks, setTasks] = useState<Task[]>(() => {
-        const savedTasks = localStorage.getItem('tasks');
-        return savedTasks ? JSON.parse(savedTasks) : [];
-    });
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [newTask, setNewTask] = useState<Task>({ title: '', description: '', status: 'To Do' });
     const [filter, setFilter] = useState<'All' | 'To Do' | 'In Progress' | 'Done'>('All');
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,7 +18,18 @@ const TaskPage = () => {
     const [undoTimeout, setUndoTimeout] = useState<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        if (typeof window !== 'undefined') {
+            const savedTasks = localStorage.getItem('tasks');
+            if (savedTasks) {
+                setTasks(JSON.parse(savedTasks));
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
     }, [tasks]);
 
     const addTask = () => {
