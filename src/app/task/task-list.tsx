@@ -1,5 +1,6 @@
 import React from 'react'
 import { Task } from '../lib/interface';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 interface TaskListProps {
     filteredTasks: Task[];
@@ -16,7 +17,7 @@ export default function TaskList({ filteredTasks, handleEditTask, deleteTask }: 
                         <th className="px-4 py-2">Title</th>
                         <th className="px-4 py-2">Description</th>
                         <th className="px-4 py-2">Status</th>
-                        <th className="px-4 py-2">Actions</th>
+                        <th className="w-20 px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody className=''>
@@ -31,16 +32,16 @@ export default function TaskList({ filteredTasks, handleEditTask, deleteTask }: 
                             </td>
                             <td className="px-4 py-2 text-center flex gap-3 justify-center">
                                 <button
-                                    className="bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                                    className=" hover:text-gray-400 text-gray-500 font-bold py-2 px-2 rounded"
                                     onClick={() => handleEditTask(task)}
                                 >
-                                    Edit
+                                    <FaEdit size={24}/>
                                 </button>
                                 <button
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                    className="hover:opacity-30 text-red-700 font-bold py-2 px-4 rounded"
                                     onClick={() => deleteTask(task.id!)}
                                 >
-                                    Delete
+                                    <FaTrash size={24}/>
                                 </button>
                             </td>
                         </tr>
