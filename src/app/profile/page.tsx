@@ -49,12 +49,21 @@ const UserProfile: React.FC = () => {
                                 className="w-full px-3 py-2 border rounded-lg bg-gray-800 border-gray-800"
                             />
                         </div>
-                        <button
-                            type='submit'
-                            className="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                        >
-                            Save
-                        </button>
+                        <div className="flex gap-4">
+                            <button
+                                type='submit'
+                                className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                            >
+                                Save
+                            </button>
+                            <button
+                                onClick={() => setEditMode(false)}
+                                className="px-4 py-2 bg-gray-500 text-white rounded-lg"
+                            >
+                                cancel
+                            </button>
+                        </div>
+
                     </form>
                 ) : (
                     <div className="text-center">
