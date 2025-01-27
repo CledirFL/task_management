@@ -1,5 +1,6 @@
 import React from 'react';
 import { Task } from '../lib/interface';
+import Button from '@/components/Button';
 
 interface TaskFormProps {
     newTask: Task;
@@ -10,19 +11,22 @@ interface TaskFormProps {
 }
 
 export default function TaskForm({ newTask, setNewTask, addTask, editTask, handleCancel }: TaskFormProps) {
+    
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (newTask.id) {
+            editTask(newTask.id, newTask);
+        } else {
+            addTask();
+        }
+    }
+    
     return (
         <>
             <h2 className="text-xl font-bold mb-4">{newTask.id ? "Update the task" : "Add new task"}</h2>
             <form
                 className='flex flex-col gap-4'
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    if (newTask.id) {
-                        editTask(newTask.id, newTask);
-                    } else {
-                        addTask();
-                    }
-                }}
+                onSubmit={handleSubmit}
             >
                 <input
                     required
@@ -51,19 +55,13 @@ export default function TaskForm({ newTask, setNewTask, addTask, editTask, handl
                     <option value="Done">Done</option>
                 </select>
                 <div className="flex gap-4">
-                    <button
-                        type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        {newTask.id ? 'Update Task' : 'Add Task'}
-                    </button>
-                    <button
-                        type="button"
-                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={handleCancel}
-                    >
+                    <Button type="submit"  rounded='rounded-md'>
+                    {newTask.id ? 'Update Task' : 'Add Task'}
+                    </Button>
+
+                    <Button onClick={handleCancel} variant='outline' rounded='rounded-md'>
                         Cancel
-                    </button>
+                    </Button>
                 </div>
             </form>
         </>

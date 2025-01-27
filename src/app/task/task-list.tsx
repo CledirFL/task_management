@@ -9,6 +9,26 @@ interface TaskListProps {
 }
 
 export default function TaskList({ filteredTasks, handleEditTask, deleteTask }: TaskListProps) {
+
+    const returnActionsButtons = (task: Task) => {
+        return (
+            <>
+                <button
+                    className=" hover:text-gray-400 text-gray-500 font-bold py-2 px-2 rounded"
+                    onClick={() => handleEditTask(task)}
+                >
+                    <FaEdit size={24} />
+                </button>
+                <button
+                    className="hover:opacity-30 text-red-700 font-bold py-2 px-4 rounded"
+                    onClick={() => deleteTask(task.id!)}
+                >
+                    <FaTrash size={24} />
+                </button>
+            </>
+        )
+    }
+
     return (
         <>
             <div className='gap-4 w-full p-4 rounded shadow bg-gray-800 overflow-x-auto hidden md:block'>
@@ -32,18 +52,7 @@ export default function TaskList({ filteredTasks, handleEditTask, deleteTask }: 
                                     </span>
                                 </td>
                                 <td className="px-4 py-2 text-center flex gap-3 justify-center">
-                                    <button
-                                        className=" hover:text-gray-400 text-gray-500 font-bold py-2 px-2 rounded"
-                                        onClick={() => handleEditTask(task)}
-                                    >
-                                        <FaEdit size={24} />
-                                    </button>
-                                    <button
-                                        className="hover:opacity-30 text-red-700 font-bold py-2 px-4 rounded"
-                                        onClick={() => deleteTask(task.id!)}
-                                    >
-                                        <FaTrash size={24} />
-                                    </button>
+                                    {returnActionsButtons(task)}
                                 </td>
                             </tr>
                         ))}
@@ -52,7 +61,7 @@ export default function TaskList({ filteredTasks, handleEditTask, deleteTask }: 
             </div>
             <div className='md:hidden flex flex-col gap-2'>
                 {filteredTasks.map(task => (
-                    <div className='grid grid-cols-1 gap-4'>
+                    <div className='grid grid-cols-1 gap-4' key={task.id}>
                         <div className='bg-gray-800 p-4 rounded shadow'>
                             <div className='flex items-center justify-between space-x-2 text-sm'>
                                 <p className='font-bold'>{task.title}</p>
@@ -65,18 +74,7 @@ export default function TaskList({ filteredTasks, handleEditTask, deleteTask }: 
                             <div className='flex items-center justify-between space-x-2 text-sm mt-2'>
                                 <p>{task.description}</p>
                                 <div className="text-center flex gap-1 justify-center">
-                                    <button
-                                        className=" hover:text-gray-400 text-gray-500 font-bold py-1 px-1 rounded"
-                                        onClick={() => handleEditTask(task)}
-                                    >
-                                        <FaEdit size={20} />
-                                    </button>
-                                    <button
-                                        className="hover:opacity-30 text-red-700 font-bold py-1 px-1 rounded"
-                                        onClick={() => deleteTask(task.id!)}
-                                    >
-                                        <FaTrash size={20} />
-                                    </button>
+                                    {returnActionsButtons(task)}
                                 </div>
                             </div>
                         </div>

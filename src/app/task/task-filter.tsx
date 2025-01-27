@@ -1,3 +1,4 @@
+import Button from '@/components/Button';
 import React from 'react'
 
 interface TaskFilterProps {
@@ -22,12 +23,10 @@ export default function TaskFilter({ filter, setFilter, setIsModalOpen }: TaskFi
                     <option value="Done">Done</option>
                 </select>
             </div>
-            <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => setIsModalOpen(true)}
-            >
+        
+            <Button onClick={() => setIsModalOpen(true)}  rounded='rounded-md'>
                 Add New Task
-            </button>
+            </Button>
         </div>
     )
 }
