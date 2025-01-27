@@ -6,6 +6,7 @@ import { Task } from '../lib/interface';
 import TaskNotFound from './task-not-found';
 import TaskList from './task-list';
 import TaskForm from './task-form';
+import TaskFilter from './task-filter';
 
 
 const sampleTasks: Task[] = [
@@ -97,41 +98,22 @@ const TaskPage = () => {
         <div className="container mx-auto p-4 text-sm">
             <h1 className='text-2xl font-bold mb-4'>Task Management</h1>
             <p className='text-gray-400'>Manage your tasks here.</p>
-            {feedbackMessage && (
+            {feedbackMessage &&
                 <FeedbackMessage size='large' feedbackMessage={feedbackMessage} undoDelete={undoDelete} deletedTask={deletedTask} />
-            )}
-            {filteredTasks.length != 0 && (<div className="flex gap-3 justify-end mb-4">
-                <div>
-                    <label className="mr-2">Filter tasks by status:</label>
-                    <select
-                        value={filter}
-                        onChange={(e) => setFilter(e.target.value as 'All' | 'To Do' | 'In Progress' | 'Done')}
-                        className="border rounded p-2 bg-gray-800 border-gray-800 text-white"
-                    >
-                        <option value="All">All</option>
-                        <option value="To Do">To Do</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Done">Done</option>
-                    </select>
-                </div>
-                <button
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => setIsModalOpen(true)}
-                >
-                    Add New Task
-                </button>
-            </div>)}
+            }
+
+            {filteredTasks.length != 0 && <TaskFilter filter={filter} setFilter={setFilter} setIsModalOpen={setIsModalOpen} />}
 
             <Modal isOpen={isModalOpen} onClose={handleCancel}>
 
-               <TaskForm newTask={newTask} setNewTask={setNewTask} addTask={addTask} editTask={editTask} handleCancel={handleCancel} />
+                <TaskForm newTask={newTask} setNewTask={setNewTask} addTask={addTask} editTask={editTask} handleCancel={handleCancel} />
                 {feedbackMessage && !newTask.id && (
-                    <FeedbackMessage feedbackMessage={feedbackMessage}  />
+                    <FeedbackMessage feedbackMessage={feedbackMessage} />
                 )}
             </Modal>
 
             {filteredTasks.length === 0 ? (
-               <TaskNotFound onCreateNew={handleCreateNew} />
+                <TaskNotFound onCreateNew={handleCreateNew} />
             ) : (
                 <TaskList filteredTasks={filteredTasks} handleEditTask={handleEditTask} deleteTask={deleteTask} />
             )}
