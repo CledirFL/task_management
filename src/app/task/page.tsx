@@ -1,4 +1,5 @@
 "use client"
+import Modal from '@/components/Modal';
 import { useState } from 'react';
 
 interface Task {
@@ -75,6 +76,11 @@ const TaskPage = () => {
             }
         }
     };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        setNewTask({ id: undefined, title: '', description: '', status: 'To Do' });
+    }
     const filteredTasks = filter === 'All' ? tasks : tasks.filter(task => task.status === filter);
 
     return (
@@ -116,71 +122,68 @@ const TaskPage = () => {
                 </button>
             </div>)}
 
-            {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-gray-600 p-6 rounded shadow-lg w-1/2">
-                        <h2 className="text-xl font-bold mb-4">Add New Task</h2>
-                        <form
-                            className='flex flex-col gap-4'
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                if (newTask.id) {
-                                    editTask(newTask.id, newTask);
-                                } else {
-                                    addTask();
-                                }
-                            }}
+            <Modal isOpen={isModalOpen} onClose={handleCancel}>
+
+                <h2 className="text-xl font-bold mb-4">{newTask.id ? "Update the task" : "Add new task"}</h2>
+                <form
+                    className='flex flex-col gap-4'
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        if (newTask.id) {
+                            editTask(newTask.id, newTask);
+                        } else {
+                            addTask();
+                        }
+                    }}
+                >
+                    <input
+                        required
+                        type="text"
+                        placeholder="Title"
+                        value={newTask.title}
+                        onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                        className="border rounded p-2 bg-gray-800 border-gray-800 text-white"
+                    />
+                    <input
+                        required
+                        type="text"
+                        placeholder="Description"
+                        value={newTask.description}
+                        onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+                        className="border rounded p-2 bg-gray-800 border-gray-800 text-white"
+                    />
+                    <select
+                        required
+                        value={newTask.status}
+                        onChange={(e) => setNewTask({ ...newTask, status: e.target.value as 'To Do' | 'In Progress' | 'Done' })}
+                        className="border rounded p-2 bg-gray-800 border-gray-800 text-white"
+                    >
+                        <option value="To Do">To Do</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Done">Done</option>
+                    </select>
+                    <div className="flex gap-4">
+                        <button
+                            type="submit"
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         >
-                            <input
-                                required
-                                type="text"
-                                placeholder="Title"
-                                value={newTask.title}
-                                onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-                                className="border rounded p-2 bg-gray-800 border-gray-800 text-white"
-                            />
-                            <input
-                                required
-                                type="text"
-                                placeholder="Description"
-                                value={newTask.description}
-                                onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-                                className="border rounded p-2 bg-gray-800 border-gray-800 text-white"
-                            />
-                            <select
-                                required
-                                value={newTask.status}
-                                onChange={(e) => setNewTask({ ...newTask, status: e.target.value as 'To Do' | 'In Progress' | 'Done' })}
-                                className="border rounded p-2 bg-gray-800 border-gray-800 text-white"
-                            >
-                                <option value="To Do">To Do</option>
-                                <option value="In Progress">In Progress</option>
-                                <option value="Done">Done</option>
-                            </select>
-                            <div className="flex gap-4">
-                                <button
-                                    type="submit"
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                >
-                                    {newTask.id ? 'Update Task' : 'Add Task'}
-                                </button>
-                                <button
-                                    type="button"
-                                    className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={() => setIsModalOpen(false)}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        </form>
-                        {feedbackMessage && !newTask.id && (
-                            <div className="mt-5 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                                {feedbackMessage}
-                            </div>
-                        )}
+                            {newTask.id ? 'Update Task' : 'Add Task'}
+                        </button>
+                        <button
+                            type="button"
+                            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                            onClick={handleCancel}
+                        >
+                            Cancel
+                        </button>
                     </div>
-                </div>
-            )}
+                </form>
+                {feedbackMessage && !newTask.id && (
+                    <div className="mt-5 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                        {feedbackMessage}
+                    </div>
+                )}
+            </Modal>
 
             {filteredTasks.length === 0 ? (
                 <div className="text-center mt-8">
@@ -208,7 +211,7 @@ const TaskPage = () => {
                                 <tr key={task.id} className="border-b">
                                     <td className="px-4 py-2 text-center">{task.title}</td>
                                     <td className="px-4 py-2 text-center">{task.description}</td>
-                                    <td className="px-4 py-2 text-center">
+                                    <td className="px-4 py-2 text-center whitespace-nowrap">
                                         <span className={`px-2 py-1 rounded-full text-white ${task.status === 'Done' ? 'bg-green-500' : task.status === 'In Progress' ? 'bg-blue-500' : 'bg-gray-500'}`}>
                                             {task.status}
                                         </span>
