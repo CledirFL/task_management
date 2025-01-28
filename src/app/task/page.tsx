@@ -108,9 +108,9 @@ const TaskPage = () => {
             <Modal isOpen={isModalOpen} onClose={handleCancel}>
 
                 <TaskForm newTask={newTask} setNewTask={setNewTask} addTask={addTask} editTask={editTask} handleCancel={handleCancel} />
-                {feedbackMessage && !newTask.id && (
+                {/* {feedbackMessage && !newTask.id && (
                     <FeedbackMessage feedbackMessage={feedbackMessage} />
-                )}
+                )} */}
             </Modal>
 
             {filteredTasks.length === 0 ? (
