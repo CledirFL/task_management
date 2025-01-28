@@ -7,13 +7,16 @@ export default function SideBar() {
     const pathName = usePathname();
     const isActive = (path: string) => pathName === path;
 
+    if (pathName === '/') {
+        return null;
+    }
+
     return (
         <aside className="w-64 bg-background shadow-lg text-white border-r border-gray-900 hidden md:block">
             <div className="p-4 font-bold text-xl border-b border-gray-800">
                 <Link href="/">
                     Task Manager
                 </Link>
-
             </div>
             <nav className="mt-5">
                 <ul className='flex flex-col gap-2'>
