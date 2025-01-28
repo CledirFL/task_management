@@ -17,7 +17,7 @@ export default function Home() {
             management app.</p>
         </div>
 
-        <div className="self-center">
+        <div className="self-center mt-8">
           <Button onClick={() => router.push("/task")}>Get Started</Button>
         </div>
       </div>
