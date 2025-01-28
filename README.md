@@ -1,8 +1,25 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
+First, clone the project repository:
 
-First, run the development server:
+```bash
+git clone https://github.com/CledirFL/task_management.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd task_management
+```
+
+Install the dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
