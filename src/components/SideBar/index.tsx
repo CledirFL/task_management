@@ -22,12 +22,12 @@ export default function SideBar() {
                 <ul className='flex flex-col gap-2'>
                     <li className="mb-2 ml-4">
                         <Link href="/task" legacyBehavior>
-                            <a className={`text-gray-700 hover:text-gray-300 ${isActive('/task') ? 'font-bold text-gray-200' : ''}`}>Task Board</a>
+                            <a className={`text-gray-700 hover:text-gray-300 ${isActive('/task') ? 'font-bold text-gray-100' : ''}`}>Task Board</a>
                         </Link>
                     </li>
                     <li className="mb-2 ml-4">
                         <Link href="/profile" legacyBehavior>
-                            <a className={`text-gray-700 hover:text-gray-300 ${isActive('/profile') ? 'font-bold text-gray-200' : ''}`} >User Profile</a>
+                            <a className={`text-gray-700 hover:text-gray-300 ${isActive('/profile') ? 'font-bold text-gray-100' : ''}`} >User Profile</a>
                         </Link>
                     </li>
                 </ul>
