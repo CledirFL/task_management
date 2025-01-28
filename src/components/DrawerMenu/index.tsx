@@ -10,7 +10,6 @@ export default function DrawerMenu() {
     const handleLinkClick = () => {
         setDrawerOpen(false);
     };
-    console.log("router:", pathName);
 
     const isActive = (path: string) => pathName === path;
 
@@ -65,17 +64,17 @@ export default function DrawerMenu() {
                             <ul className="space-y-6">
                                 <li className="mb-2 ml-4">
                                     <Link href="/" legacyBehavior>
-                                        <a className={`text-gray-700 hover:text-gray-300 ${isActive('/') ? 'font-bold text-gray-300' : ''}`} onClick={handleLinkClick}>Home</a>
+                                        <a className={`text-gray-700 hover:text-gray-300 ${isActive('/') ? 'font-bold text-gray-200' : ''}`} onClick={handleLinkClick}>Home</a>
                                     </Link>
                                 </li>
                                 <li className="mb-2 ml-4">
                                     <Link href="/task" legacyBehavior>
-                                        <a className={`text-gray-700 hover:text-gray-300 ${isActive('/task') ? 'font-bold text-gray-300' : ''}`} onClick={handleLinkClick}>Task Board</a>
+                                        <a className={`text-gray-700 hover:text-gray-300 ${isActive('/task') ? 'font-bold text-gray-200' : ''}`} onClick={handleLinkClick}>Task Board</a>
                                     </Link>
                                 </li>
                                 <li className="mb-2 ml-4">
                                     <Link href="/profile" legacyBehavior>
-                                        <a className={`text-gray-700 hover:text-gray-300 ${isActive('/profile') ? 'font-bold text-gray-300' : ''}`} onClick={handleLinkClick}>User Profile</a>
+                                        <a className={`text-gray-700 hover:text-gray-300 ${isActive('/profile') ? 'font-bold text-gray-200' : ''}`} onClick={handleLinkClick}>User Profile</a>
                                     </Link>
                                 </li>
                             </ul>
