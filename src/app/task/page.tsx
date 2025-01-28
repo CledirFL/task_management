@@ -103,21 +103,16 @@ const TaskPage = () => {
                 <FeedbackMessage feedbackMessage={feedbackMessage} undoDelete={undoDelete} deletedTask={deletedTask} />
             }
 
-            {filteredTasks.length != 0 && <TaskFilter filter={filter} setFilter={setFilter} setIsModalOpen={setIsModalOpen} />}
+            {tasks.length > 0 && <TaskFilter filter={filter} setFilter={setFilter} setIsModalOpen={setIsModalOpen} />}
 
             <Modal isOpen={isModalOpen} onClose={handleCancel}>
-
                 <TaskForm newTask={newTask} setNewTask={setNewTask} addTask={addTask} editTask={editTask} handleCancel={handleCancel} />
-                {/* {feedbackMessage && !newTask.id && (
-                    <FeedbackMessage feedbackMessage={feedbackMessage} />
-                )} */}
             </Modal>
 
-            {filteredTasks.length === 0 ? (
-                <TaskNotFound onCreateNew={handleCreateNew} />
-            ) : (
-                <TaskList filteredTasks={filteredTasks} handleEditTask={handleEditTask} deleteTask={deleteTask} />
-            )}
+            {tasks.length === 0 && <TaskNotFound onCreateNew={handleCreateNew} />}
+
+            {tasks.length > 0 && <TaskList filteredTasks={filteredTasks} handleEditTask={handleEditTask} deleteTask={deleteTask} />}
+
         </div>
     );
 };
